@@ -1,4 +1,5 @@
-from typing import Counter
+from collections import OrderedDict
+import unittest
 
 
 class LRU_Cache(object):
@@ -7,41 +8,47 @@ class LRU_Cache(object):
         # Initialize class variables
         self.capacity = capacity
         self.counter = 0
-        self.lru = dict()
+        self.lru = OrderedDict()
         self.cache = dict()
 
     def get(self, key):
         # Retrieve item from provided key. Return -1 if nonexistent.
-        item = self.cache[key]
-        self.counter = (self.counter + 1) % self.capacity
-        self.lru[self.counter] = item
-        return item
+        if key not in self.cache:
+            return -1
+        item = self.cache[key]  # O(1)-Time
+        self.counter += 1
+        del self.lru[self.cache[key][1]]  # O(1)-Time
+        self.lru[self.counter] = item  # O(1)-Time
+        return item[0]
 
     def set(self, key, value):
         # Set the value if the key is not present in the cache. If the cache is at capacity remove the oldest item.
-        #if len(self.cache) == self.capacity:
-            #self.lru.pop(self.counter)
-        if self.cache[key] is None:
-            self.lru.pop(self.cache[key][1])
+        if len(self.cache) == self.capacity:
+            i, v = self.lru.popitem(last=False)  # O(1)-Time
+            self.cache.pop(v)  # O(1)-Time
+        if key in self.cache:
+            del self.lru.pop[self.cache[key][1]]  # O(1)-Time
         self.counter += 1
-        self.cache[key] = (value, self.counter)
-        self.lru[self.counter] = key
+        self.cache[key] = (value, self.counter)  # O(1)-Time
+        self.lru[self.counter] = key  # O(1)-Time
 
 
-our_cache = LRU_Cache(5)
+class Tests(unittest.TestCase):
+    def setUp(self):
+        self.cache = LRU_Cache(5)
 
-our_cache.set(1, 1)
-our_cache.set(2, 2)
-our_cache.set(3, 3)
-our_cache.set(4, 4)
+    def test_lru(self):
+        self.cache.set(1, 1)
+        self.cache.set(2, 2)
+        self.cache.set(3, 3)
+        self.cache.set(4, 4)
+        self.assertEqual(self.cache.get(1), 1)
+        self.assertEqual(self.cache.get(2), 2)
+        self.assertEqual(self.cache.get(9), -1)
+        self.cache.set(5, 5)
+        self.cache.set(6, 6)
+        self.assertEqual(self.cache.get(3), -1)
 
 
-our_cache.get(1)       # returns 1
-our_cache.get(2)       # returns 2
-our_cache.get(9)      # returns -1 because 9 is not present in the cache
-
-our_cache.set(5, 5)
-our_cache.set(6, 6)
-
-# returns -1 because the cache reached it's capacity and 3 was the least recently used entry
-our_cache.get(3)
+if __name__ == "__main__":
+    unittest.main()
