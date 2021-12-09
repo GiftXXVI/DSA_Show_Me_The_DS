@@ -21,10 +21,10 @@ def find_files(suffix, path):
        a list of paths
     """
     return _find_files(path, files, suffix)
-    return None
 
 
 def _find_files(path, files, ends_with):
+    print(path)
     if os.path.isfile(path):
         if path[-1] == ends_with:
             files.append(path)
@@ -35,12 +35,10 @@ def _find_files(path, files, ends_with):
             return None
         else:
             for dir in dirs:
-                print(path)
                 _find_files(os.path.join(path, dir), files, ends_with)
             return files
 
 
 if __name__ == "__main__":
-    #find_files(suffix, path)
     suffix = 'c'
     print(find_files(suffix, os.path.join(os.getcwd(), path)))
