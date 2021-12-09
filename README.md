@@ -21,9 +21,8 @@ If
 - $f_n$ represents the number of files at level n
 
 then
-```markdown
+
 x = $\sum_{n=1}^{l}(d_n + f_n)$
-```
 
 - represents the number of iterations taken to visit all files and directories at all levels and
 - O(x) represents the complexity of the recursive algorithm that returns when it visits every leaf node on the directory tree.
