@@ -30,8 +30,13 @@ def find_files(suffix, path):
     return None
 
 
-#def _find_files(path):
-
+def _find_files(path):
+    if os.path.isfile(path):
+        return path
+    else:
+        dirs = os.listdir(path)
+        for dir in dirs:
+            _find_files(dir)
 
 if __name__ == "__main__":
     find_files(suffix, path)
