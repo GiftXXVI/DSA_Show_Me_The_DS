@@ -36,7 +36,9 @@ def _find_files(path):
     else:
         dirs = os.listdir(path)
         for dir in dirs:
-            _find_files(dir)
+            return os.path.join(path, _find_files(dir))
+
 
 if __name__ == "__main__":
-    find_files(suffix, path)
+    #find_files(suffix, path)
+    print(_find_files(os.path.join(os.getcwd(), path)))
