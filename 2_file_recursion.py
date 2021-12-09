@@ -19,11 +19,18 @@ def find_files(suffix, path):
     Returns:
        a list of paths
     """
-    print(os.listdir(path))
+    dirs = os.listdir(path)
+    for dir in dirs:
+        if os.path.isdir(os.path.join(path, dir)):
+            print(os.path.join(path, dir), os.listdir(os.path.join(path, dir)))
+        else:
+            if os.path.isfile(os.path.join(path, dir)):
+                print(os.path.join(path, dir),
+                      os.path.join(path, dir)[-1] == 'c')
     return None
 
-def r_find_files(suffix, path):
-    return None
+
+#def _find_files(path):
 
 
 if __name__ == "__main__":
