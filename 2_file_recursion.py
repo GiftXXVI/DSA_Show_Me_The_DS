@@ -1,5 +1,5 @@
 import os
-path = './testdir'
+path = 'testdir'
 suffix = 'c'
 
 
@@ -30,15 +30,24 @@ def find_files(suffix, path):
     return None
 
 
-def _find_files(path):
+def _find_files(path, files, ends_with):
     if os.path.isfile(path):
-        return path
+        if path[-1] == ends_with:
+            files.append(path)
+        return None
     else:
         dirs = os.listdir(path)
-        for dir in dirs:
-            return os.path.join(path, _find_files(dir))
+        if len(dirs) == 0:
+            return None
+        else:
+            for dir in dirs:
+                print(path)
+                _find_files(os.path.join(path, dir), files, ends_with)
+            return files
 
 
 if __name__ == "__main__":
     #find_files(suffix, path)
-    print(_find_files(os.path.join(os.getcwd(), path)))
+    files = []
+    ends_with = 'c'
+    print(_find_files(os.path.join(os.getcwd(), path), files, ends_with))
