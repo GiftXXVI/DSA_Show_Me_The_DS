@@ -14,8 +14,14 @@ class MinHeap(object):
     def get_index(self, index):
         return index - 1
 
+    def get_left_index(self, index):
+        return 2*self.get_index(index)
+
+    def get_right_index(self, index):
+        return 2*self.get_index(index)+1
+
     def find_min(self):
-        return self.heap[0]
+        return self.heap[self.get_index(1)]
 
     def insert(self, node):
         pass
@@ -26,10 +32,10 @@ class MinHeap(object):
     def replace(self, node):
         pass
 
-    def get_size(self):
+    def get_size(self) -> int:
         return len(self.heap)
 
-    def is_empty(self):
+    def is_empty(self) -> bool:
         return self.get_size() == 0
 
     def __repr__(self) -> str:
