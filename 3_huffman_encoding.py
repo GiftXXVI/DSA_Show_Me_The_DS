@@ -25,17 +25,29 @@ class MinHeap(object):
         for i in range(length):
             self.heap[i] = arr[i]
 
-    def get_parent(self, index):
+    def get_parent(self, index) -> tuple:
         parent_index = index//2
         return self.heap[parent_index], parent_index
 
-    def get_left_child(self, index):
+    def get_left_child(self, index) -> tuple:
         left_index = 2*index
         return self.heap[left_index], left_index
 
-    def get_right_child(self, index):
+    def has_left_child(self, index) -> bool:
+        left_index = 2*index
+        if self.size < left_index and self.heap[left_index] is not None:
+            return True
+        return False
+
+    def get_right_child(self, index) -> tuple:
         right_index = 2*index+1
         return self.heap[right_index], right_index
+
+    def has_right_child(self, index) -> bool:
+        right_index = 2*index+1
+        if self.size < right_index and self.heap[right_index] is not None:
+            return True
+        return False
 
     def find_min(self):
         return self.heap[1]
@@ -65,11 +77,24 @@ class MinHeap(object):
         print(f'Exit: {node}, {self.size}, {len(self.heap)-1}')
         return
 
-    def extract_min(self):
-        pass
+    def heapify(self, index):
+        self._heapify(index)
 
-    def replace(self, node):
-        pass
+    def _heapify(self, index):
+        if self.has_left_child(index):
+            #heapify left
+            pass
+
+        if self.has_right_child(index):
+            #heapify right
+            pass
+
+    def extract_min(self) -> Node:
+        node = self.find_min()
+        self.heap[1] = self.heap[self.size]
+        self.heap[self.size] = None
+        self.heapify(1)
+        return node
 
     def get_size(self) -> int:
         return len(self.heap)
