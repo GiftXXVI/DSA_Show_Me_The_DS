@@ -49,7 +49,7 @@ class MinHeap(object):
             return True
         return False
 
-    def find_min(self):
+    def find_min(self) -> Node:
         return self.heap[1]
 
     def insert(self, node) -> None:
@@ -83,6 +83,7 @@ class MinHeap(object):
     def _heapify(self, index):
         if self.has_left_child(index):
             #heapify left
+            left, left_index = self.get_left_child(index)
             pass
 
         if self.has_right_child(index):
