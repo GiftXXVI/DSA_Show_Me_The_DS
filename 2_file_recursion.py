@@ -1,8 +1,6 @@
 import os
 path = 'testdir'
 suffix = 'c'
-files = []
-
 
 def find_files(suffix, path):
     """
@@ -20,6 +18,7 @@ def find_files(suffix, path):
     Returns:
        a list of paths
     """
+    files = []
     return _find_files(path, files, suffix)
 
 

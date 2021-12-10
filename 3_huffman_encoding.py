@@ -25,6 +25,9 @@ class MinHeap(object):
     def __init__(self, character, frequency) -> None:
         self.heap = list()
 
+    def get_index(self):
+        pass
+
     def find_min(self):
         return self.heap[0]
 
