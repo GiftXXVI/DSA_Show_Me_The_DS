@@ -53,11 +53,9 @@ class MinHeap(object):
         return self.heap[1]
 
     def insert(self, node) -> None:
-        print(f'Entry: {node}, {self.size}, {len(self.heap)-1}')
         if self.size == 0:
             self.heap[1] = node
             self.size = 1
-            print(f'Exit: {node}, {self.size}, {len(self.heap)-1}')
             return
         index = self.size + 1
         self.heap[index] = node
@@ -74,30 +72,28 @@ class MinHeap(object):
         self.size += 1
         if self.size == len(self.heap) - 1:
             self.extend()
-        print(f'Exit: {node}, {self.size}, {len(self.heap)-1}')
         return
 
     def heapify(self, index):
         self._heapify(index)
 
     def _heapify(self, index):
-        if self.has_left_child(index):
-            print(f'Heapifying {self.heap[index]}')
-            left, left_index = self.get_left_child(index)
-            if self.heap[index].frequency > left.frequency:
-                temp = self.heap[index]
-                self.heap[index] = left
-                self.heap[left_index] = temp
-                self._heapify(left_index)
+        if self.heap[index] is not None:
+            if self.has_left_child(index):
+                left, left_index = self.get_left_child(index)
+                if self.heap[index].frequency > left.frequency:
+                    temp = self.heap[index]
+                    self.heap[index] = left
+                    self.heap[left_index] = temp
+                    self._heapify(left_index)
 
-        if self.has_right_child(index):
-            print(f'Heapifying {self.heap[index]}')
-            right, right_index = self.get_right_child(index)
-            if self.heap[index].frequency > right.frequency:
-                temp = self.heap[index]
-                self.heap[index] = right
-                self.heap[right_index] = temp
-                self._heapify(right_index)
+            if self.has_right_child(index):
+                right, right_index = self.get_right_child(index)
+                if self.heap[index].frequency > right.frequency:
+                    temp = self.heap[index]
+                    self.heap[index] = right
+                    self.heap[right_index] = temp
+                    self._heapify(right_index)
 
         return
 
@@ -106,6 +102,7 @@ class MinHeap(object):
         self.heap[1] = self.heap[self.size]
         self.heap[self.size] = None
         self.heapify(1)
+        self.size -= 1
         return node
 
     def get_size(self) -> int:
@@ -155,6 +152,6 @@ if __name__ == "__main__":
     for item in test_scenario:
         heap.insert(Node(item[0], item[1]))
 
-    print(heap)
-    print(heap.extract_min())
-    print(heap)
+    while(heap.find_min()):
+        print(heap)
+        print(heap.extract_min())
