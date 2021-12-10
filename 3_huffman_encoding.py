@@ -14,17 +14,28 @@ class MinHeap(object):
     def get_index(self, index):
         return index - 1
 
-    def get_left_index(self, index):
-        return self.get_index(2*index)
+    def get_parent(self, index):
+        return self.heap[self.get_index(index/2)], self.get_index(index/2)
 
-    def get_right_index(self, index):
-        return self.get_index(2*index+1)
+    def get_left_child(self, index):
+        return self.heap[self.get_index(2*index)], self.get_index(2*index)
+
+    def get_right_child(self, index):
+        return self.heap[self.get_index(2*index+1)], self.get_index(2*index+1)
 
     def find_min(self):
         return self.heap[self.get_index(1)]
 
     def insert(self, node):
-        pass
+        index = self.get_index(len(self.heap))
+        self.heap[index] = node
+        parent, parent_index = self.get_parent(index)
+        while node.frequency < parent.frequency:
+            temp = parent
+            self.heap[parent_index] = node
+            self.heap[index] = parent
+            index = parent_index
+            parent, parent_index = self.get_parent(index)
 
     def extract_min(self):
         pass
