@@ -5,28 +5,14 @@ class Node(object):
     def __init__(self, character=None, frequency=None) -> None:
         self.character = character
         self.frequency = frequency
-        self.left = None
-        self.right = None
-
-    def set_left(self, node):
-        self.left = node
-
-    def set_right(self, node):
-        self.right = node
-
-    def get_left(self):
-        return self.left
-
-    def get_right(self):
-        return self.right
 
 
 class MinHeap(object):
     def __init__(self, character, frequency) -> None:
         self.heap = list()
 
-    def get_index(self):
-        pass
+    def get_index(self, index):
+        return index - 1
 
     def find_min(self):
         return self.heap[0]
@@ -45,6 +31,12 @@ class MinHeap(object):
 
     def is_empty(self):
         return self.get_size() == 0
+
+    def __repr__(self) -> str:
+        return str(self.heap)
+
+    def __str__(self) -> str:
+        return str(self.heap)
 
 
 def huffman_encoding(data):
