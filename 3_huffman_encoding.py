@@ -14,9 +14,16 @@ class Node(object):
 
 
 class MinHeap(object):
-    def __init__(self) -> None:
-        self.heap = [None for i in range(26)]
+    def __init__(self, size) -> None:
+        self.heap = [None for i in range(size)]
         self.size = 0
+
+    def extend(self):
+        length = len(self.heap)
+        arr = [self.heap[i] for i in range(length)]
+        self.heap = [None for i in range(2*length)]
+        for i in range(length):
+            self.heap[i] = arr[i]
 
     def get_parent(self, index):
         parent_index = index//2
@@ -31,20 +38,19 @@ class MinHeap(object):
         return self.heap[right_index], right_index
 
     def find_min(self):
-        return self.heap[self.get_index(1)]
+        return self.heap[1]
 
     def insert(self, node) -> None:
-        print(node, self.size)
+        print(f'Entry: {node}, {self.size}, {len(self.heap)-1}')
         if self.size == 0:
             self.heap[1] = node
-            self.size += 1
+            self.size = 1
+            print(f'Exit: {node}, {self.size}, {len(self.heap)-1}')
             return
         index = self.size + 1
         self.heap[index] = node
         parent, parent_index = self.get_parent(index)
         while node.frequency < parent.frequency:
-            print(f'Parent {parent}, {parent_index}')
-            print(f'Node {node}, {index}')
             temp = parent
             self.heap[parent_index] = node
             self.heap[index] = parent
@@ -54,6 +60,9 @@ class MinHeap(object):
             else:
                 break
         self.size += 1
+        if self.size == len(self.heap) - 1:
+            self.extend()
+        print(f'Exit: {node}, {self.size}, {len(self.heap)-1}')
         return
 
     def extract_min(self):
@@ -104,8 +113,8 @@ if __name__ == "__main__":
     #    sys.getsizeof(decoded_data)))
     #print("The content of the encoded data is: {}\n".format(decoded_data))
 
-    test_scenarios = [('A', 7), ('B', 3), ('C', 7), ('D', 2), ('E', 6)]
-    heap = MinHeap()
-    for item in test_scenarios:
+    test_scenario = [('A', 7), ('B', 3), ('C', 7), ('D', 2), ('E', 6)]
+    heap = MinHeap(len(test_scenario)+2)
+    for item in test_scenario:
         heap.insert(Node(item[0], item[1]))
     print(heap)
