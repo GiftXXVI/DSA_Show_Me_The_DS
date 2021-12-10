@@ -15,10 +15,10 @@ class MinHeap(object):
         return index - 1
 
     def get_left_index(self, index):
-        return 2*self.get_index(index)
+        return self.get_index(2*index)
 
     def get_right_index(self, index):
-        return 2*self.get_index(index)+1
+        return self.get_index(2*index+1)
 
     def find_min(self):
         return self.heap[self.get_index(1)]
