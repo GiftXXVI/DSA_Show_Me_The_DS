@@ -35,7 +35,7 @@ class MinHeap(object):
 
     def has_left_child(self, index) -> bool:
         left_index = 2*index
-        if self.size < left_index and self.heap[left_index] is not None:
+        if self.heap[left_index] is not None:
             return True
         return False
 
@@ -45,7 +45,7 @@ class MinHeap(object):
 
     def has_right_child(self, index) -> bool:
         right_index = 2*index+1
-        if self.size < right_index and self.heap[right_index] is not None:
+        if self.heap[right_index] is not None:
             return True
         return False
 
@@ -82,13 +82,24 @@ class MinHeap(object):
 
     def _heapify(self, index):
         if self.has_left_child(index):
-            #heapify left
+            print(f'Heapifying {self.heap[index]}')
             left, left_index = self.get_left_child(index)
-            pass
+            if self.heap[index].frequency > left.frequency:
+                temp = self.heap[index]
+                self.heap[index] = left
+                self.heap[left_index] = temp
+                self._heapify(left_index)
 
         if self.has_right_child(index):
-            #heapify right
-            pass
+            print(f'Heapifying {self.heap[index]}')
+            right, right_index = self.get_right_child(index)
+            if self.heap[index].frequency > right.frequency:
+                temp = self.heap[index]
+                self.heap[index] = right
+                self.heap[right_index] = temp
+                self._heapify(right_index)
+
+        return
 
     def extract_min(self) -> Node:
         node = self.find_min()
@@ -143,4 +154,7 @@ if __name__ == "__main__":
     heap = MinHeap(len(test_scenario)+2)
     for item in test_scenario:
         heap.insert(Node(item[0], item[1]))
+
+    print(heap)
+    print(heap.extract_min())
     print(heap)
