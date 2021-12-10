@@ -6,36 +6,55 @@ class Node(object):
         self.character = character
         self.frequency = frequency
 
+    def __repr__(self) -> str:
+        return f'({self.character}, {self.frequency})'
+
+    def __str__(self) -> str:
+        return f'({self.character}, {self.frequency})'
+
 
 class MinHeap(object):
-    def __init__(self, character, frequency) -> None:
-        self.heap = list()
-
-    def get_index(self, index):
-        return index - 1
+    def __init__(self) -> None:
+        self.heap = [None for i in range(26)]
+        self.size = 0
 
     def get_parent(self, index):
-        return self.heap[self.get_index(index/2)], self.get_index(index/2)
+        parent_index = index//2
+        return self.heap[parent_index], parent_index
 
     def get_left_child(self, index):
-        return self.heap[self.get_index(2*index)], self.get_index(2*index)
+        left_index = 2*index
+        return self.heap[left_index], left_index
 
     def get_right_child(self, index):
-        return self.heap[self.get_index(2*index+1)], self.get_index(2*index+1)
+        right_index = 2*index+1
+        return self.heap[right_index], right_index
 
     def find_min(self):
         return self.heap[self.get_index(1)]
 
-    def insert(self, node):
-        index = self.get_index(len(self.heap))
+    def insert(self, node) -> None:
+        print(node, self.size)
+        if self.size == 0:
+            self.heap[1] = node
+            self.size += 1
+            return
+        index = self.size + 1
         self.heap[index] = node
         parent, parent_index = self.get_parent(index)
         while node.frequency < parent.frequency:
+            print(f'Parent {parent}, {parent_index}')
+            print(f'Node {node}, {index}')
             temp = parent
             self.heap[parent_index] = node
             self.heap[index] = parent
             index = parent_index
-            parent, parent_index = self.get_parent(index)
+            if parent_index > 1:
+                parent, parent_index = self.get_parent(index)
+            else:
+                break
+        self.size += 1
+        return
 
     def extract_min(self):
         pass
@@ -65,22 +84,28 @@ def huffman_decoding(data, tree):
 
 
 if __name__ == "__main__":
-    codes = {}
+    #codes = {}
 
-    a_great_sentence = "The bird is the word"
+    #a_great_sentence = "The bird is the word"
 
-    print("The size of the data is: {}\n".format(
-        sys.getsizeof(a_great_sentence)))
-    print("The content of the data is: {}\n".format(a_great_sentence))
+    # print("The size of the data is: {}\n".format(
+    #    sys.getsizeof(a_great_sentence)))
+    #print("The content of the data is: {}\n".format(a_great_sentence))
 
-    encoded_data, tree = huffman_encoding(a_great_sentence)
+    #encoded_data, tree = huffman_encoding(a_great_sentence)
 
-    print("The size of the encoded data is: {}\n".format(
-        sys.getsizeof(int(encoded_data, base=2))))
-    print("The content of the encoded data is: {}\n".format(encoded_data))
+    # print("The size of the encoded data is: {}\n".format(
+    #    sys.getsizeof(int(encoded_data, base=2))))
+    #print("The content of the encoded data is: {}\n".format(encoded_data))
 
-    decoded_data = huffman_decoding(encoded_data, tree)
+    #decoded_data = huffman_decoding(encoded_data, tree)
 
-    print("The size of the decoded data is: {}\n".format(
-        sys.getsizeof(decoded_data)))
-    print("The content of the encoded data is: {}\n".format(decoded_data))
+    # print("The size of the decoded data is: {}\n".format(
+    #    sys.getsizeof(decoded_data)))
+    #print("The content of the encoded data is: {}\n".format(decoded_data))
+
+    test_scenarios = [('A', 7), ('B', 3), ('C', 7), ('D', 2), ('E', 6)]
+    heap = MinHeap()
+    for item in test_scenarios:
+        heap.insert(Node(item[0], item[1]))
+    print(heap)
