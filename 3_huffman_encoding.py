@@ -154,9 +154,11 @@ if __name__ == "__main__":
             continue
         frequencies[i] = 1
 
+    live_scenario = zip(frequencies.keys(), frequencies.values())
+
     test_scenario = [('A', 7), ('B', 3), ('C', 7), ('D', 2), ('E', 6)]
-    heap = MinHeap(len(test_scenario)+2)
-    for item in test_scenario:
+    heap = MinHeap(len(live_scenario)+2)
+    for item in live_scenario:
         heap.insert(Node(item[0], item[1]))
 
     while(heap.find_min()):
