@@ -129,7 +129,7 @@ def huffman_decoding(data, tree):
 if __name__ == "__main__":
     #codes = {}
 
-    #a_great_sentence = "The bird is the word"
+    a_great_sentence = "The bird is the word"
 
     # print("The size of the data is: {}\n".format(
     #    sys.getsizeof(a_great_sentence)))
@@ -146,6 +146,13 @@ if __name__ == "__main__":
     # print("The size of the decoded data is: {}\n".format(
     #    sys.getsizeof(decoded_data)))
     #print("The content of the encoded data is: {}\n".format(decoded_data))
+    
+    frequencies = dict()
+    for i in a_great_sentence:
+        if i in frequencies:
+            frequencies[i] += 1
+            continue
+        frequencies[i] = 1
 
     test_scenario = [('A', 7), ('B', 3), ('C', 7), ('D', 2), ('E', 6)]
     heap = MinHeap(len(test_scenario)+2)
