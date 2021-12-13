@@ -2,15 +2,22 @@ import sys
 
 
 class Node(object):
-    def __init__(self, character=None, frequency=None) -> None:
+    def __init__(self, character=None, frequency=None, left=None, right=None) -> None:
         self.character = character
         self.frequency = frequency
+        self.left = left
+        self.right = right
 
     def __repr__(self) -> str:
         return f'({self.character}, {self.frequency})'
 
     def __str__(self) -> str:
         return f'({self.character}, {self.frequency})'
+
+
+class HuffmanTree(object):
+    def __init__(self, node) -> None:
+        self.root = node
 
 
 class MinHeap(object):
@@ -106,7 +113,7 @@ class MinHeap(object):
         return node
 
     def get_size(self) -> int:
-        return len(self.heap)
+        return self.size
 
     def is_empty(self) -> bool:
         return self.get_size() == 0
@@ -116,6 +123,7 @@ class MinHeap(object):
 
     def __str__(self) -> str:
         return str(self.heap)
+
 
 def prepare_string(data):
     frequencies = dict()
@@ -127,15 +135,25 @@ def prepare_string(data):
 
     return zip(frequencies.keys(), frequencies.values())
 
+
 def huffman_encoding(data):
-    prepared_data = prepare_string(data)
+    prepared_data = list(prepare_string(data))
     heap = MinHeap(len(prepared_data)+2)
     for item in prepared_data:
         heap.insert(Node(item[0], item[1]))
 
-    while(heap.find_min()):
-        print(heap)
-        print(heap.extract_min())
+    while(heap.find_min() and heap.get_size() > 1):
+        print(heap, heap.get_size())
+        node1 = heap.extract_min()
+        node2 = heap.extract_min()
+        merge = Node(frequency=node1.frequency +
+                     node2.frequency, left=node1, right=node2)
+        heap.insert(merge)
+
+    left = heap.extract_min()
+    right = heap.extract_min()
+    tree = HuffmanTree(Node(frequency=left.frequency +
+                       right.frequency, left=left, right=right))
     pass
 
 
@@ -151,6 +169,8 @@ if __name__ == "__main__":
     print("The size of the data is: {}\n".format(
         sys.getsizeof(a_great_sentence)))
     print("The content of the data is: {}\n".format(a_great_sentence))
+
+    huffman_encoding(a_great_sentence)
 
     #encoded_data, tree = huffman_encoding(a_great_sentence)
 
