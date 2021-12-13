@@ -237,11 +237,8 @@ def huffman_encoding(data):
         for item in traversal:
             if chr==item[0].character:
                 encoded_data += item[1]
-    print(encoded_data, len(encoded_data))
-    # for chr in data:
-    #    code = traverse(tree, chr)
-    #    encoded_data.append(code)
-    # return encoded_data, tree
+    encoded_data
+    return encoded_data, tree
 
 
 def huffman_decoding(data, tree):
@@ -257,13 +254,12 @@ if __name__ == "__main__":
         sys.getsizeof(a_great_sentence)))
     print("The content of the data is: {}\n".format(a_great_sentence))
 
-    huffman_encoding(a_great_sentence)
 
-    #encoded_data, tree = huffman_encoding(a_great_sentence)
+    encoded_data, tree = huffman_encoding(a_great_sentence)
 
-    # print("The size of the encoded data is: {}\n".format(
-    #    sys.getsizeof(int(encoded_data, base=2))))
-    #print("The content of the encoded data is: {}\n".format(encoded_data))
+    print("The size of the encoded data is: {}\n".format(
+        sys.getsizeof(int(encoded_data, base=2))))
+    print("The content of the encoded data is: {}\n".format(encoded_data))
 
     #decoded_data = huffman_decoding(encoded_data, tree)
 
