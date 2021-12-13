@@ -1,5 +1,33 @@
 import sys
 
+class Stack():
+    def __init__(self):
+        self.list = list()
+        
+    def push(self,value):
+        self.list.append(value)
+        
+    def pop(self):
+        return self.list.pop()
+        
+    def top(self):
+        if len(self.list) > 0:
+            return self.list[-1]
+        else:
+            return None
+        
+    def is_empty(self):
+        return len(self.list) == 0
+    
+    def __repr__(self):
+        if len(self.list) > 0:
+            s = "<top of stack>\n_________________\n"
+            s += "\n_________________\n".join([str(item) for item in self.list[::-1]])
+            s += "\n_________________\n<bottom of stack>"
+            return s
+        
+        else:
+            return "<stack is empty>"
 
 class Node(object):
     def __init__(self, character=None, frequency=None, left=None, right=None, bit=None) -> None:
@@ -182,6 +210,7 @@ def huffman_encoding(data):
         merge = Node(frequency=node1.frequency +
                      node2.frequency, left=node1, right=node2)
         heap.insert(merge)
+        print(heap)
 
     left = heap.extract_min()
     right = heap.extract_min()
@@ -191,10 +220,10 @@ def huffman_encoding(data):
                        right.frequency, left=left, right=right))
     encoded_data = list()
     code = list()
-    for chr in data:
-        code = traverse(tree, chr)
-        encoded_data.append(code)
-    return encoded_data, tree
+    #for chr in data:
+    #    code = traverse(tree, chr)
+    #    encoded_data.append(code)
+    #return encoded_data, tree
 
 
 def huffman_decoding(data, tree):
@@ -210,7 +239,7 @@ if __name__ == "__main__":
         sys.getsizeof(a_great_sentence)))
     print("The content of the data is: {}\n".format(a_great_sentence))
 
-    print(huffman_encoding(a_great_sentence))
+    huffman_encoding(a_great_sentence)
 
     #encoded_data, tree = huffman_encoding(a_great_sentence)
 
