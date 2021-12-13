@@ -2,11 +2,18 @@ import sys
 
 
 class Node(object):
-    def __init__(self, character=None, frequency=None, left=None, right=None) -> None:
+    def __init__(self, character=None, frequency=None, left=None, right=None, bit=None) -> None:
         self.character = character
         self.frequency = frequency
+        self.bit = bit
         self.left = left
         self.right = right
+
+    def set_bit(self, bit) -> None:
+        self.bit = bit
+
+    def get_bit(self) -> bool:
+        return self.bit
 
     def __repr__(self) -> str:
         return f'({self.character}, {self.frequency})'
@@ -142,19 +149,23 @@ def huffman_encoding(data):
     for item in prepared_data:
         heap.insert(Node(item[0], item[1]))
 
-    while(heap.find_min() and heap.get_size() > 1):
-        print(heap, heap.get_size())
+    while(heap.find_min() and heap.get_size() > 2):        
         node1 = heap.extract_min()
         node2 = heap.extract_min()
+        node1.set_bit(0)
+        node2.set_bit(1)
         merge = Node(frequency=node1.frequency +
                      node2.frequency, left=node1, right=node2)
         heap.insert(merge)
 
     left = heap.extract_min()
     right = heap.extract_min()
+    left.set_bit(0)
+    right.set_bit(1)
     tree = HuffmanTree(Node(frequency=left.frequency +
                        right.frequency, left=left, right=right))
-    pass
+    encoded_data = None
+    return encoded_data, tree
 
 
 def huffman_decoding(data, tree):
@@ -170,7 +181,7 @@ if __name__ == "__main__":
         sys.getsizeof(a_great_sentence)))
     print("The content of the data is: {}\n".format(a_great_sentence))
 
-    huffman_encoding(a_great_sentence)
+    print(huffman_encoding(a_great_sentence))
 
     #encoded_data, tree = huffman_encoding(a_great_sentence)
 
