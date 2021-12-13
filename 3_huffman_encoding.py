@@ -117,8 +117,25 @@ class MinHeap(object):
     def __str__(self) -> str:
         return str(self.heap)
 
+def prepare_string(data):
+    frequencies = dict()
+    for i in data:
+        if i in frequencies:
+            frequencies[i] += 1
+            continue
+        frequencies[i] = 1
+
+    return zip(frequencies.keys(), frequencies.values())
 
 def huffman_encoding(data):
+    prepared_data = prepare_string(data)
+    heap = MinHeap(len(prepared_data)+2)
+    for item in prepared_data:
+        heap.insert(Node(item[0], item[1]))
+
+    while(heap.find_min()):
+        print(heap)
+        print(heap.extract_min())
     pass
 
 
@@ -131,9 +148,9 @@ if __name__ == "__main__":
 
     a_great_sentence = "The bird is the word"
 
-    # print("The size of the data is: {}\n".format(
-    #    sys.getsizeof(a_great_sentence)))
-    #print("The content of the data is: {}\n".format(a_great_sentence))
+    print("The size of the data is: {}\n".format(
+        sys.getsizeof(a_great_sentence)))
+    print("The content of the data is: {}\n".format(a_great_sentence))
 
     #encoded_data, tree = huffman_encoding(a_great_sentence)
 
@@ -146,21 +163,3 @@ if __name__ == "__main__":
     # print("The size of the decoded data is: {}\n".format(
     #    sys.getsizeof(decoded_data)))
     #print("The content of the encoded data is: {}\n".format(decoded_data))
-    
-    frequencies = dict()
-    for i in a_great_sentence:
-        if i in frequencies:
-            frequencies[i] += 1
-            continue
-        frequencies[i] = 1
-
-    live_scenario = zip(frequencies.keys(), frequencies.values())
-
-    test_scenario = [('A', 7), ('B', 3), ('C', 7), ('D', 2), ('E', 6)]
-    heap = MinHeap(len(live_scenario)+2)
-    for item in live_scenario:
-        heap.insert(Node(item[0], item[1]))
-
-    while(heap.find_min()):
-        print(heap)
-        print(heap.extract_min())
