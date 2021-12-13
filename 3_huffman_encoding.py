@@ -242,7 +242,30 @@ def huffman_encoding(data):
 
 
 def huffman_decoding(data, tree):
-    pass
+    node = tree.root
+    if data[0] == node.left.bit:
+        node = node.left
+    else:
+        node = node.right
+    init = node
+    i = 1
+    encoded_data = ''
+    while i < len(data):
+        if node.character == None:
+            if data[i] == str(node.left.bit):
+                node = node.left
+            else:
+                node = node.right
+        else:
+            encoded_data += node.character
+            node = tree.root
+            if data[i]==str(node.left.bit):
+                node = node.left
+            else:
+                node = node.right
+        i += 1
+    encoded_data += node.character
+    return encoded_data
 
 
 if __name__ == "__main__":
@@ -260,6 +283,6 @@ if __name__ == "__main__":
 
     decoded_data = huffman_decoding(encoded_data, tree)
 
-    # print("The size of the decoded data is: {}\n".format(
-    #    sys.getsizeof(decoded_data)))
-    #print("The content of the encoded data is: {}\n".format(decoded_data))
+    print("The size of the decoded data is: {}\n".format(
+        sys.getsizeof(decoded_data)))
+    print("The content of the encoded data is: {}\n".format(decoded_data))
