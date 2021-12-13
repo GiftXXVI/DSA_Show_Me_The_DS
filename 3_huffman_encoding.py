@@ -15,6 +15,18 @@ class Node(object):
     def get_bit(self) -> bool:
         return self.bit
 
+    def get_left_child(self):
+        return self.left
+
+    def has_left_child(self):
+        return self.left is not None
+
+    def get_right_child(self):
+        return self.right
+
+    def has_right_child(self):
+        return self.right is not None
+
     def __repr__(self) -> str:
         return f'({self.character}, {self.frequency})'
 
@@ -25,6 +37,9 @@ class Node(object):
 class HuffmanTree(object):
     def __init__(self, node) -> None:
         self.root = node
+
+    def get_root(self) -> Node:
+        return self.root
 
 
 class MinHeap(object):
@@ -143,13 +158,23 @@ def prepare_string(data):
     return zip(frequencies.keys(), frequencies.values())
 
 
+def traverse(tree, chr):
+    node = tree.get_root()
+    bits = list()
+    bits = _traverse(node, chr)
+
+
+def _traverse(node, chr):
+    pass
+
+
 def huffman_encoding(data):
     prepared_data = list(prepare_string(data))
     heap = MinHeap(len(prepared_data)+2)
     for item in prepared_data:
         heap.insert(Node(item[0], item[1]))
 
-    while(heap.find_min() and heap.get_size() > 2):        
+    while(heap.find_min() and heap.get_size() > 2):
         node1 = heap.extract_min()
         node2 = heap.extract_min()
         node1.set_bit(0)
@@ -164,7 +189,11 @@ def huffman_encoding(data):
     right.set_bit(1)
     tree = HuffmanTree(Node(frequency=left.frequency +
                        right.frequency, left=left, right=right))
-    encoded_data = None
+    encoded_data = list()
+    code = list()
+    for chr in data:
+        code = traverse(tree, chr)
+        encoded_data.append(code)
     return encoded_data, tree
 
 
