@@ -194,17 +194,19 @@ traversal = list()
 
 def pre_order(tree):
     node = tree.root
-    traverse(node)
+    binary_str = ''
+    traverse(node, binary_str)
 
 
-def traverse(node):
-    traversal.append(node)
+def traverse(node, binary_str):
+    traversal.append((node, binary_str))
     if node.has_left_child():
-        print(f'left {node.left}')
-        traverse(node.left)
+        binary_str += '0'
+        traverse(node.left, binary_str)
     if node.has_right_child():
-        print(f'right {node.right}')
-        traverse(node.right)
+        binary_str = binary_str[:-1]
+        binary_str += '1'
+        traverse(node.right, binary_str)
     return
 
 
@@ -229,10 +231,13 @@ def huffman_encoding(data):
     right.set_bit(1)
     tree = HuffmanTree(Node(frequency=left.frequency +
                        right.frequency, left=left, right=right))
-    encoded_data = list()
-    code = list()
+    encoded_data = ''
     pre_order(tree)
-    print(traversal)
+    for chr in data:
+        for item in traversal:
+            if chr==item[0].character:
+                encoded_data += item[1]
+    print(encoded_data, len(encoded_data))
     # for chr in data:
     #    code = traverse(tree, chr)
     #    encoded_data.append(code)
