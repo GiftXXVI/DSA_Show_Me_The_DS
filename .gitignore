@@ -132,4 +132,4 @@ dmypy.json
 testdir/*
 testdir/
 
-.vscode/
+.vscode/*
