@@ -25,7 +25,8 @@ class Block:
         self.next = None
 
     def __repr__(self) -> str:
-        return f'<--\n Timestamp: {self.timestamp}, \n Data: {self.data}, \n SHA 256 Hash: {self.hash}, \n Prev_Hash: {self.previous_hash} \n-->'
+        dt = datetime.utcfromtimestamp(self.timestamp)
+        return f'<--\n Timestamp: {dt.strftime("%H:%M %d/%m/%Y")}, \n Data: {self.data}, \n SHA 256 Hash: {self.hash}, \n Prev_Hash: {self.previous_hash} \n-->'
 
 
 class Blockchain(object):
