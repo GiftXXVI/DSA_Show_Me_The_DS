@@ -264,7 +264,8 @@ def huffman_decoding(data, tree):
             else:
                 node = node.right
         i += 1
-    encoded_data += node.character
+        if i==len(data):
+            encoded_data += node.character
     return encoded_data
 
 
