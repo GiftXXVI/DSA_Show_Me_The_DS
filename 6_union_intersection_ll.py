@@ -46,7 +46,6 @@ def union(llist_1, llist_2):
     node1 = llist_1.head
     node2 = llist_2.head
     union = dict()
-    ctr = 0
     while (node1 is not None) or (node2 is not None):
         if node1 is not None:
             if node1.value not in union:
