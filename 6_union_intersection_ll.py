@@ -62,7 +62,36 @@ def union(llist_1, llist_2):
 
 def intersection(llist_1, llist_2):
     # Your Solution Here
-    pass
+    node1 = llist_1.head
+    node2 = llist_2.head
+    intersection = dict()
+    dict1 = dict()
+    dict2 = dict()
+    while(node1 is not None) or (node2 is not None):
+        if node1 is not None:
+            if node1.value not in dict1:
+                dict1[node1.value] = node1.value
+            node1 = node1.next
+
+        if node2 is not None:
+            if node2.value not in dict2:
+                dict2[node2.value] = node2.value
+            node2 = node2.next
+
+    node1 = llist_1.head
+    node2 = llist_2.head
+
+    while (node1 is not None) or (node2 is not None):
+        if node1 is not None:
+            if node1.value in dict1 and node1.value in dict2:
+                intersection[node1.value] = node1.value
+            node1 = node1.next
+        if node2 is not None:
+            if node2.value in dict1 and node2.value in dict2:
+                intersection[node2.value] = node2.value
+            node2 = node2.next
+
+    return intersection.keys()
 
 
 # Test case 1
@@ -83,7 +112,7 @@ print(union(linked_list_1, linked_list_2))
 print(intersection(linked_list_1, linked_list_2))
 
 element_1.extend(element_2)
-#print(set(element_1))
+# print(set(element_1))
 
 # Test case 2
 
