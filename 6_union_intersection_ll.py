@@ -111,9 +111,6 @@ for i in element_2:
 print(union(linked_list_1, linked_list_2))
 print(intersection(linked_list_1, linked_list_2))
 
-element_1.extend(element_2)
-# print(set(element_1))
-
 # Test case 2
 
 linked_list_3 = LinkedList()
