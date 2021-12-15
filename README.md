@@ -43,8 +43,10 @@ The implementation uses the following variables:
 
 ## 2. File Recursion
 
+The implementation uses recursion to visit all nodes at all levels of the directory tree.
+
 If 
-- n represents the current level(depth) of iteration and
+- n represents the current level(depth) of the directory tree and
 - $d_n$ represents the number of directories at level n and
 - $f_n$ represents the number of files at level n
 
@@ -58,7 +60,25 @@ then
 - $O(x)$ represents the complexity of the recursive algorithm that returns when it visits every leaf node on the directory tree.
 
 ## 3. Huffman Coding
-Uses a heap created using character frequencies of a given string to create a Huffman tree then uses the Hufffman tree and a hash table to encode and subsequently decode the string.
+The implementation includes the following data strctures:
+- a Stack
+- a Tree
+- a Min Heap
+
+There are 2 algorithms, the first builds the Huffman tree and uses it to encode the message. The second algorithm uses the Huffman tree to decode the code back into the original message.
+
+### 1. Encode
+#### prepare_string()
+The encode function starts by calling a prepare_string function. The prepare_string function uses a dictionary to tabulate the frequency of each unique character as it loops through the input string.
+
+This loop is an O(n) operation because it cycles through all characters in the string and searches for it in the dictionary. Checking the dictionary for a key is an O(1) operation, therefore; overall, this remains an O(n) operation.
+
+The final section of the function consists of a zip function that takes the dictionary's keys list and dictionary values list as input. Generating these 2 lists is an O(n) operation. The zip function depends on the size and number of list inputs, thus it is an O(n^2) operation. 
+
+Since O(n^2) is the largest term in the function, the prepare_string function is an O(n^2) operation.
+ 
+### 2. Decode
+
 ## 4. Active Directory
 Uses recursion to search for user inside a group and all its subgroups and recursively inside subgroups to the lowest level. 
 ## 5. Blockchain
