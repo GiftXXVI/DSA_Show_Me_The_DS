@@ -56,3 +56,17 @@ then
 
 - represents the number of iterations taken to visit all files and directories at all levels and
 - $O(x)$ represents the complexity of the recursive algorithm that returns when it visits every leaf node on the directory tree.
+
+## 3. Huffman Coding
+Uses a heap created using character frequencies of a given string to create a Huffman tree then uses the Hufffman tree and a hash table to encode and subsequently decode the string.
+## 4. Active Directory
+Uses recursion to search for user inside a group and all its subgroups and recursively inside subgroups to the lowest level. 
+## 5. Blockchain
+Creates a blockchain using a linked list.
+The linked list is implemented as a class called Blockchain. It contains properties such as head and tail which track the head and tail nodes (Blocks) of the Blockchain.
+The insert operation is an O(1) operation that sets the inserted node as head if the list is empty or sets the inserted node as tail if there are already items in the linked list.
+
+Traversing the list requires looping through all Blocks by starting at the head and following the next pointers until the last element is reached. The time taken varies depending on the number of elements in the list. Thus this is an O(n) operation.
+
+## 6. Union and Intersection
+Uses a Python dict/associative array/hash table and 2 loops to determine which numbers are in both of 2 linked lists (intersection) or in either one or the other (union).  
