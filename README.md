@@ -80,7 +80,7 @@ Since O(n^2) is the largest term in the function, the prepare_string function is
 #### Initialize Heap
 The next step is to create a Heap, implemented as an array of size of the string returned by prepare_string() + 2. The first of the additional 2 array indices is kept empty, so that 1 based indexing can be used seamlessly. The last index is also kept empty to prevent the extension method from extending the underlying array when the lat index of the Heap is initialized with the data from prepare_string().
 
-The process of initializing the Heap includes loop that get each element of the prepared string (this is an O(n) operation) and inserts it at the first available index of the Heap(which is also the bottom level of the tree) then moves it to its proper position in the tree by comparing its value with the value of it's parent ans swapping if the child has a lower value than the parent. This is an O(d) operation where d represents the current depth of the leaf nodes of the Heap. 
+The process of initializing the Heap includes loop that get each element of the prepared string (this is an O(n) operation) and inserts it at the first available index of the Heap(which is also the bottom level of the tree) then moves it to its proper position in the tree by comparing its value with the value of it's parent ans swapping if the child has a lower value than the parent. This is an O(d) operation where d represents the current depth of the leaf nodes of the Heap. Therefore, looping through the input list to add items to the heap is an O(n*d) operation.
 ### 2. Decode
 
 ## 4. Active Directory
