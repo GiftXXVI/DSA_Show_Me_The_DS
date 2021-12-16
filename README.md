@@ -81,6 +81,22 @@ Since O(n^2) is the largest term in the function, the prepare_string function is
 The next step is to create a Heap, implemented as an array of size of the string returned by prepare_string() + 2. The first of the additional 2 array indices is kept empty, so that 1 based indexing can be used seamlessly. The last index is also kept empty to prevent the extension method from extending the underlying array when the lat index of the Heap is initialized with the data from prepare_string().
 
 The process of initializing the Heap includes loop that get each element of the prepared string (this is an O(n) operation) and inserts it at the first available index of the Heap(which is also the bottom level of the tree) then moves it to its proper position in the tree by comparing its value with the value of it's parent ans swapping if the child has a lower value than the parent. This is an O(d) operation where d represents the current depth of the leaf nodes of the Heap. Therefore, looping through the input list to add items to the heap is an O(n*d) operation.
+
+
+#### Create Huffman Tree
+
+##### Create Intermediate Node
+
+This task is split in 2 subtasks.
+The first is to create the intermediate nodes of the Huffman tree. This requires progressively extracting the 2 smallest elements of the Heap and merging them by creating a new node, setting them to be le.ft and right nodes of the intermediate node and inserting the new node into the Heap. 
+
+Extracting the smallest element involves running a heapify function to relocate the newly inserted element. The complexity of this operation is O(d) where d is the depth of the Heap. 
+
+The loop that calls the extraction function runs until there is at least one element in the Heap. This makes it an O(n) operation (O(n/2) approximated to O(n)).
+
+##### Create Huffmann Tree
+The root element is created by extracting the last 2 elements of the Heap and initialising the tree with a new node (root) with the last 2 nodes on the Heap as its left and right nodes. This is an O(1) operation because it extracts the item at the first index of the Heap.
+
 ### 2. Decode
 
 ## 4. Active Directory
