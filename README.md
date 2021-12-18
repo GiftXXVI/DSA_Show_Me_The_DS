@@ -60,28 +60,28 @@ then
 - $O(x)$ represents the complexity of the recursive algorithm that returns when it visits every leaf node on the directory tree.
 
 ## 3. Huffman Coding
-The implementation includes the following data strctures:
-- a Stack
-- a Tree
-- a Min Heap
-
-There are 2 algorithms, the first builds the Huffman tree and uses it to encode the message. The second algorithm uses the Huffman tree to decode the code back into the original message.
+There are 2 algorithms, the first algorithm builds the Huffman tree and uses it to encode the message. The second algorithm uses the Huffman tree to decode the coded message back into its original form.
 
 ### 1. Encode
 #### prepare_string()
-The encode function starts by calling a prepare_string function. The prepare_string function uses a dictionary to tabulate the frequency of each unique character as it loops through the input string.
+The encode function starts by calling a prepare_string() function. This function tabulates the frequency of each unique character as it loops through the input string and stores the frequency in a dictionary with the character as the key.
 
-This loop is an O(n) operation because it cycles through all characters in the string and searches for it in the dictionary. Checking the dictionary for a key is an O(1) operation, therefore; overall, this remains an O(n) operation.
+This loop is an O(n) operation because it cycles through all characters in the string and searches for each character in the dictionary to record or increment its frequency.(Checking the dictionary for a key is an O(1) operation.)
 
-The final section of the function consists of a zip function that takes the dictionary's keys list and dictionary values list as input. Generating these 2 lists is an O(n) operation. The zip function depends on the size and number of list inputs, thus it is an O(n^2) operation. 
+The final section of the function consists of a zip function that takes the dictionary's keys list and its values list as inputs. Generating these 2 lists is an O(n) operation. The zip function depends on the size and number of list inputs, thus it is an O(n^2) operation. 
 
-Since O(n^2) is the largest term in the function, the prepare_string function is an O(n^2) operation.
+In summary, this function has a complexity of O(n^2 + n). With n^2 coming from the zip operation and n coming from the loop. Since O(n^2) is the largest term (and grows at the highest rate with increasing input size) in the expression, the prepare_string() function is an O(n^2) operation.
  
 #### Initialize Heap
-The next step is to create a Heap, implemented as an array of size of the string returned by prepare_string() + 2. The first of the additional 2 array indices is kept empty, so that 1 based indexing can be used seamlessly. The last index is also kept empty to prevent the extension method from extending the underlying array when the lat index of the Heap is initialized with the data from prepare_string().
+The next step is to create a heap. The heap is implemented as an array of size of the array returned by prepare_string() plus 2 additional indices.
 
-The process of initializing the Heap includes loop that get each element of the prepared string (this is an O(n) operation) and inserts it at the first available index of the Heap(which is also the bottom level of the tree) then moves it to its proper position in the tree by comparing its value with the value of it's parent ans swapping if the child has a lower value than the parent. This is an O(d) operation where d represents the current depth of the leaf nodes of the Heap. Therefore, looping through the input list to add items to the heap is an O(n*d) operation.
+The process of initializing the Heap includes loop that get each element of the array returned from prepare_string() function (this is an O(n) operation). 
 
+After retrieval, the element is immediately inserted into the first available index of the Heap(which is also the bottom level of the tree). This is an O(1) operation.
+
+The element is then moved to its proper position in the tree by the heapify function which compares its value with the value of its parent and swaps the 2 if the child has a lower value than the parent. The maximum number of comparisons possible is equal to the depth of the tree. Thus, this is an O(d) operation where d represents the depth of the leaf nodes of the Heap. 
+
+Therefore, looping through the input list to add items to the heap is an O(n*d) operation for n items and d levels of the tree.
 
 #### Create Huffman Tree
 
