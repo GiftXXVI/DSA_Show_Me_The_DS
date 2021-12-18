@@ -88,11 +88,15 @@ Therefore, looping through the input list to add items to the heap is an O(n*d) 
 ##### Create Intermediate Node
 
 This task is split in 2 subtasks.
-The first is to create the intermediate nodes of the Huffman tree. This requires progressively extracting the 2 smallest elements of the Heap and merging them by creating a new node, setting them to be le.ft and right nodes of the intermediate node and inserting the new node into the Heap. 
+The first is to create the intermediate nodes of the Huffman tree. This process involves repeating the following steps:
+ 
+1. extract the 2 smallest elements of the Heap. 
+2. create a new node whose value is the sum of the values of the 2 removed nodes (set the left and right pointers of this node to the 2 extracted nodes, these pointers are used in the Huffman Tree later) and 
+3. insert the new node into its correct place in the Heap. 
 
-Extracting the smallest element involves running a heapify function to relocate the newly inserted element. The complexity of this operation is O(d) where d is the depth of the Heap. 
+This loop runs n-2 times where n is the initial number of items in the heap (this can be approximated to O(n), a function of the initial input size). Each loop removes 2 items from the heap and inserts one. Each removal triggers a heapify function. Then finally, there is an insert operation which also triggers a heapify function call (which has already been shown to be an O(d) operation). 
 
-The loop that calls the extraction function runs until there is at least one element in the Heap. This makes it an O(n) operation (O(n/2) approximated to O(n)).
+In summary, the 3 heapify calls are O(3d). Taking the loop into consideration, this part of the function can be approximated to O(n*d) where n is the number of items in the heap and d is the number of levels of the heap.
 
 ##### Create Huffmann Tree
 The root element is created by extracting the last 2 elements of the Heap and initialising the tree with a new node (root) with the last 2 nodes on the Heap as its left and right nodes. This is an O(1) operation because it extracts the item at the first index of the Heap.
