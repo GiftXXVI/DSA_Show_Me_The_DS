@@ -98,8 +98,22 @@ This loop runs n-2 times where n is the initial number of items in the heap (thi
 
 In summary, the 3 heapify calls are O(3d). Taking the loop into consideration, this part of the function can be approximated to O(n*d) where n is the number of items in the heap and d is the number of levels of the heap.
 
-##### Create Huffmann Tree
+##### Create the Root of the Huffmann Tree
+This step takes advantage of the left and right pointers set in the previous step to complete the tree by creating a root node and setting the 2 remaining subtrees to be its left and right children.
+
 The root element is created by extracting the last 2 elements of the Heap and initialising the tree with a new node (root) with the last 2 nodes on the Heap as its left and right nodes. This is an O(1) operation because it extracts the item at the first index of the Heap.
+
+##### Create a dictionary of codes
+
+The first step is to perform a preorder traversal of the Huffman Tree, usig recursion to take note of every bit on the path to a node and use this to create a dictionary of all characters mapped to their binary codes.
+
+The traversal is an O(n) operation, since it visits all items in the Huffman Tree. On the other hand, inserting into a hash map/dictionary is an O(1) operation. Therefore this process is an O(n) process.
+
+##### Encoding the Data
+The final step is to encode the data. This process involves looping through each character in the input string, retrieving its binary code from the dictionary and appending the code to the output binary string. This is an O(n) process where n is the size of the input string.
+
+##### Conclusion
+The process of building a Huffman Tree from the input string and generating its binary code has been shown to have 2 O(n) steps, 1 O(1) step and 1 O(n*d) step. Of these algebraic terms; n*d < n^2 and is the fastest growing term as input size increases. For a full binary tree, d can be n/2. Therefore, estimating n*d or n*n/2 to n^2, the function has a complexity of O(n^2).
 
 ### 2. Decode
 

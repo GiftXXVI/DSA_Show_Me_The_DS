@@ -1,37 +1,5 @@
 import sys
 
-
-class Stack():
-    def __init__(self):
-        self.list = list()
-
-    def push(self, value):
-        self.list.append(value)
-
-    def pop(self):
-        return self.list.pop()
-
-    def top(self):
-        if len(self.list) > 0:
-            return self.list[-1]
-        else:
-            return None
-
-    def is_empty(self):
-        return len(self.list) == 0
-
-    def __repr__(self):
-        if len(self.list) > 0:
-            s = "<top of stack>\n_________________\n"
-            s += "\n_________________\n".join([str(item)
-                                              for item in self.list[::-1]])
-            s += "\n_________________\n<bottom of stack>"
-            return s
-
-        else:
-            return "<stack is empty>"
-
-
 class Node(object):
     def __init__(self, character=None, frequency=None, left=None, right=None, bit=None) -> None:
         self.character = character
@@ -189,7 +157,7 @@ def prepare_string(data):
     return zip(frequencies.keys(), frequencies.values())
 
 
-traversal = list()
+traversal = dict()
 
 
 def pre_order(tree):
@@ -199,7 +167,7 @@ def pre_order(tree):
 
 
 def traverse(node, binary_str):
-    traversal.append((node, binary_str))
+    traversal[node.character] = binary_str
     if node.has_left_child():
         binary_str += '0'
         traverse(node.left, binary_str)
@@ -234,9 +202,7 @@ def huffman_encoding(data):
     encoded_data = ''
     pre_order(tree)
     for chr in data:
-        for item in traversal:
-            if chr == item[0].character:
-                encoded_data += item[1]
+        encoded_data += traversal[chr]
     encoded_data
     return encoded_data, tree
 
