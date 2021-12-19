@@ -127,9 +127,11 @@ This function is O(n) where n is the length of the input binary string. (The ope
 ## 4. Active Directory
 Uses recursion to search for user inside a group and all its subgroups and recursively inside subgroups to the lowest level. 
 
-Inside each level of the hierarchy, the algorithm iterates through each item in the users list and returns True if the item matches the search term.
+The recursive function accepts a search term and a group in which to search. It extracts the list of users and sorts them in ascending alphabetical order. The sort function has a complexity of O(n log n).
 
-Assuming 
+Next, it uses a binary search to try and find the search term in the sorted users list. The binary search algorithm has a complextity of O(log n).
+
+The final part recursively calls each of the subgroups until the search term is found in one of the subgroups. This also happens recursively and the number of calls depends on the depth of the nesting.
 
 ## 5. Blockchain
 Creates a blockchain using a linked list.
