@@ -1,4 +1,5 @@
 import random
+from math import ceil
 
 
 class Group(object):
@@ -59,18 +60,29 @@ def is_user_in_group(user, group):
       user(str): user name/id
       group(class:Group): group to check user membership against
     """
-    #grp = sorted(group)
     return _in_group(user, group)
 
 
 def _in_group(user, group):
     users = group.get_users()
+    users.sort()
     groups = group.get_groups()
-    if user in users:
-        return True
+    start = 0
+    end = len(users) - 1
+    mid = ceil((start + end)/2)
+    while start <= end:
+        if user == users[mid]:
+            return True
+        elif user < users[mid]:
+            end = mid - 1
+            mid = ceil((start + end)/2)
+        elif user > users[mid]:
+            start = mid + 1
+            mid = ceil((start + end)/2)
     for grp in groups:
         return _in_group(user, grp)
     return False
 
 
 print(is_user_in_group(sub_child_user, parent))
+print(is_user_in_group('nothing', parent))
