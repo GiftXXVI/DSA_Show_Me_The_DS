@@ -116,6 +116,13 @@ The final step is to encode the data. This process involves looping through each
 The process of building a Huffman Tree from the input string and generating its binary code has been shown to have 2 O(n) steps, 1 O(1) step and 1 O(n*d) step. Of these algebraic terms; n*d < n^2 and is the fastest growing term as input size increases. For a full binary tree, d can be n/2. Therefore, estimating n*d or n*n/2 to n^2, the function has a complexity of O(n^2).
 
 ### 2. Decode
+The decode function takes in the encoded binary string and the Huffman tree created during the encoding process as its inputs.
+
+The rest of the function iterates through each bit of the binary string. If the current bit is a 0, the agorithm advances to the left child of the current node while if the current bit is 1, it advances to the right child. 
+
+If it lands at a leaf node, it appends the character in the node and points back to the root to repeat the process and identify the next character.
+
+This function is O(n) where n is the length of the input binary string. (The operation of advancing the node pointer in the Huffman Tree is an O(1) operation, therefore it is ingored in the analysis.)
 
 ## 4. Active Directory
 Uses recursion to search for user inside a group and all its subgroups and recursively inside subgroups to the lowest level. 
