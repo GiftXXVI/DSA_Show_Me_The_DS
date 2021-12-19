@@ -126,6 +126,11 @@ This function is O(n) where n is the length of the input binary string. (The ope
 
 ## 4. Active Directory
 Uses recursion to search for user inside a group and all its subgroups and recursively inside subgroups to the lowest level. 
+
+Inside each level of the hierarchy, the algorithm iterates through each item in the users list and returns True if the item matches the search term.
+
+Assuming 
+
 ## 5. Blockchain
 Creates a blockchain using a linked list.
 The linked list is implemented as a class called Blockchain. It contains properties such as head and tail which track the head and tail nodes (Blocks) of the Blockchain.
