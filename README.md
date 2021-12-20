@@ -13,32 +13,34 @@ unzip testdir.zip
 ```
 ## 1. LRU Cache
 
-The implementation uses the following variables:
-- an `OrderedDict` to track the least recently used item named `lru`
-- a `dict` to track the cache named `cache`
-- a timing variable named `counter`, to be used as an index/has key to the `lru`
-- a value representing the capacity named `capacity`
+This implementation uses a dictionary (dict) as the cache and and ordered dictionary (OrderedDict) as the LRU tracker. 
 
-### `set`
-`set` involves the following operations:
-1. Check if the size of the cache matches the `capacity`. If this is the case:
-    - pop the least recently used item from the `lru` hash table. This is simply the first item inserted into the table that is still in the table at this moment. An `OderedDict` improves on the `dict` by keeping track of the order of insertion into the hash table, thereby enabling Deletion of the first item inserted in O(1) time.
-    - pop the least recently used item from the `cache` using the key returned by the operation in the preceding step
-2. Check if the key being inserted/modified already exists in the `lru`. If it already exists, pop it from the `lru` hash table (to maitain the property that the order of insertion reflects the order of recent usage)
-3. Update the `cache` and the `lru` table as follows (all O(1) operations)
-    - Increment the `counter`
-    - Write the new value to the `cache` using the provided key as hash key
-    - Create a new `lru` using the `counter` as the hash key
+Dictionaries were chosen for this implementation because they are able to insert, retireve and delete items in O(1) time complexity.
+
 
 ### `get`
-`get` involves the following operations:
-1. Check if the key is not in the cache, this involves looking for a key in a hash table, thus it is an O(1) operation. If the key is not present, return `-1`
-2. Retrieve the value associated with the key from the cache, this also involves looking for a key in a hash table, and is an O(1) operation.
-3. Update the `lru` table as follows (all O(1) operations)
-    - Increment the `counter`
-    - Delete the previous `lru` entry by using the key, 
-    - Create a new `lru` using the `counter` as the key
-4. Return the value retrieved in step (2) above. This is also an O(1) operation that returns the first index of a `tuple`
+
+This method retrieves an item from the cache if it is available.
+
+It increments a counter, deletes the previous LRU tracker entry for the key, inserts a new entry into the LRU tracker using the new value of the counter as a key, updates the cache entry with the new LRU key and returns the item. 
+
+All operations have a time complexity of O(1), thus the function as a whole has a time complexity of O(1).
+
+### `set`
+
+This method inserts a new item into the cache. If the cache is full, it removes the least recently used item as determined by the LRU tracker.
+
+If the item is being inserted, there is a check to determine if the size of the cache has reached the defined capacity. 
+
+If this is the case, the item at the first index of the LRU tracker is popped (taking advantage of the ability to track items in the order of insertion), this returns a tuple consisting of the LRU key and the cache key. The cache key is then used to pop the item from the cache to create one free slot.
+
+The next step is to insert or update the item. 
+
+If the key is already present in the cache (the item is being updated), then the existing LRU tracker entry is deleted.
+
+The next step is to increment the counter, set the value in the cache using the key, and insert a new item in the LRU tracker using the counter as key and the key as the value.
+
+All operations either access dictionary items using a key or increment an integer and have a time complexity of O(1).
 
 
 ## 2. File Recursion

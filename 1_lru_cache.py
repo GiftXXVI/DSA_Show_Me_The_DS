@@ -19,15 +19,16 @@ class LRU_Cache(object):
         self.counter += 1
         del self.lru[self.cache[key][1]]  # O(1)-Time
         self.lru[self.counter] = item  # O(1)-Time
+        self.cache[key] = (self.cache[key][0], self.counter)
         return item[0]
 
     def set(self, key, value):
         # Set the value if the key is not present in the cache. If the cache is at capacity remove the oldest item.
-        if len(self.cache) == self.capacity:
+        if key not in self.cache and len(self.cache) == self.capacity:
             i, v = self.lru.popitem(last=False)  # O(1)-Time
             self.cache.pop(v)  # O(1)-Time
         if key in self.cache:
-            del self.lru.pop[self.cache[key][1]]  # O(1)-Time
+            del self.lru[self.cache[key][1]]  # O(1)-Time
         self.counter += 1
         self.cache[key] = (value, self.counter)  # O(1)-Time
         self.lru[self.counter] = key  # O(1)-Time
