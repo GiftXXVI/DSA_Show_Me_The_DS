@@ -1,4 +1,4 @@
-# DSA_Show_Me_The_DS
+# Data Structures and Algorithms Project 2: Show me the Data Structures
 
 The test files can be downloaded and unzipped using the following commands:
 
@@ -141,4 +141,24 @@ The insert operation is an O(1) operation that sets the inserted node as head if
 Traversing the list requires looping through all Blocks by starting at the head and following the next pointers until the last element is reached. The time taken varies depending on the number of elements in the list. Thus this is an O(n) operation.
 
 ## 6. Union and Intersection
-Uses a Python dict/associative array/hash table and 2 loops to determine which numbers are in both of 2 linked lists (intersection) or in either one or the other (union).  
+ 
+### Union 
+The union function uses a single loop, which runs for as many iterations as the number of elements of the linked list with the most elements. It checks if the value of the current element of the either linked list is in the union dictionary and adds it if it is not found. Then it returns the keys array created from the dictionary.
+
+The loop is an O(n) process where n is the size of the larger linked list and the extraction of the list of keys from the dictionary is an O(n) process. This means the complexity of the function is O(n). 
+
+### Intersection
+The intersection function uses 3 dictionries and 2 loops. 
+
+The first loop navigates the 2 input linked lists using their next pointers and runs until the end of the longer linked list.
+
+For each item in the first linked list, it adds the value of the item to the first dictionary (dict1). 
+
+Similarly, each item in the second linked list is added to the second dictionary (dict2).
+
+The second loop navigates through the 2 linked lists and adds the value of any node that is in both dict1 and dict2 to the intersection dictionary (interection).
+
+Finally, just like the union function before, the keys list of the intersection dictionary is returned by the function.
+
+Both loops are O(n) where n is the size of the large linked list. eating the keys list from the dictionary is also an O(n) operation. Terefore, the complexity of the function is O(n).
+
