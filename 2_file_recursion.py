@@ -39,7 +39,8 @@ def _find_files(path, files, ends_with):
             return files
 
 class Tests(unittest.TestCase):
-
+    def setUp():
+        pass
 
 if __name__ == "__main__":
     suffix = 'c'
