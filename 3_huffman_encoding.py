@@ -1,4 +1,6 @@
 import sys
+import unittest
+
 
 class Node(object):
     def __init__(self, character=None, frequency=None, left=None, right=None, bit=None) -> None:
@@ -179,60 +181,88 @@ def traverse(node, binary_str):
 
 
 def huffman_encoding(data):
-    prepared_data = list(prepare_string(data))
-    heap = MinHeap(len(prepared_data)+2)
-    for item in prepared_data:
-        heap.insert(Node(item[0], item[1]))
+    if data is not None and len(data) > 3:
+        prepared_data = list(prepare_string(data))
+        heap = MinHeap(len(prepared_data)+2)
+        for item in prepared_data:
+            heap.insert(Node(item[0], item[1]))
 
-    while(heap.find_min() and heap.get_size() > 2):
-        node1 = heap.extract_min()
-        node2 = heap.extract_min()
-        node1.set_bit(0)
-        node2.set_bit(1)
-        merge = Node(frequency=node1.frequency +
-                     node2.frequency, left=node1, right=node2)
-        heap.insert(merge)
+        while(heap.find_min() and heap.get_size() > 2):
+            node1 = heap.extract_min()
+            node2 = heap.extract_min()
+            node1.set_bit(0)
+            node2.set_bit(1)
+            merge = Node(frequency=node1.frequency +
+                         node2.frequency, left=node1, right=node2)
+            heap.insert(merge)
 
-    left = heap.extract_min()
-    right = heap.extract_min()
-    left.set_bit(0)
-    right.set_bit(1)
-    tree = HuffmanTree(Node(frequency=left.frequency +
-                       right.frequency, left=left, right=right))
-    encoded_data = ''
-    pre_order(tree)
-    for chr in data:
-        encoded_data += traversal[chr]
-    encoded_data
-    return encoded_data, tree
+        left = heap.extract_min()
+        right = heap.extract_min()
+        left.set_bit(0)
+        right.set_bit(1)
+        tree = HuffmanTree(Node(frequency=left.frequency +
+                                right.frequency, left=left, right=right))
+        encoded_data = ''
+        pre_order(tree)
+        for chr in data:
+            encoded_data += traversal[chr]
+        encoded_data
+        return encoded_data, tree
+    return None, None
 
 
 def huffman_decoding(data, tree):
-    node = tree.root
-    if data[0] == node.left.bit:
-        node = node.left
-    else:
-        node = node.right
-    init = node
-    i = 1
-    encoded_data = ''
-    while i < len(data):
-        if node.character == None:
-            if data[i] == str(node.left.bit):
-                node = node.left
-            else:
-                node = node.right
+    if data is not None and len(data) > 0:
+        node = tree.root
+        if data[0] == node.left.bit:
+            node = node.left
         else:
-            encoded_data += node.character
-            node = tree.root
-            if data[i]==str(node.left.bit):
-                node = node.left
+            node = node.right
+        init = node
+        i = 1
+        encoded_data = ''
+        while i < len(data):
+            if node.character == None:
+                if data[i] == str(node.left.bit):
+                    node = node.left
+                else:
+                    node = node.right
             else:
-                node = node.right
-        i += 1
-        if i==len(data):
-            encoded_data += node.character
-    return encoded_data
+                encoded_data += node.character
+                node = tree.root
+                if data[i] == str(node.left.bit):
+                    node = node.left
+                else:
+                    node = node.right
+            i += 1
+            if i == len(data):
+                encoded_data += node.character
+        return encoded_data
+    return None
+
+
+class Tests(unittest.TestCase):
+    def setUp(self):
+        self.sentence = "The bird is the word"
+        self.none = None
+        self.empty = ""
+
+    def test_encode_decode(self):
+        encoded_data, tree = huffman_encoding(self.sentence)
+        decoded_data = huffman_decoding(encoded_data, tree)
+        self.assertEqual(decoded_data, self.sentence)
+
+    def test_null(self):
+        encoded_data, tree = huffman_encoding(self.none)
+        decoded_data = huffman_decoding(encoded_data, tree)
+        self.assertEqual(encoded_data, None)
+        self.assertEqual(decoded_data, None)
+
+    def test_empty(self):
+        encoded_data, tree = huffman_encoding(self.empty)
+        decoded_data = huffman_decoding(encoded_data, tree)
+        self.assertEqual(encoded_data, None)
+        self.assertEqual(decoded_data, None)
 
 
 if __name__ == "__main__":
@@ -253,3 +283,5 @@ if __name__ == "__main__":
     print("The size of the decoded data is: {}\n".format(
         sys.getsizeof(decoded_data)))
     print("The content of the encoded data is: {}\n".format(decoded_data))
+
+    unittest.main()

@@ -1,8 +1,6 @@
 import unittest
-
 import os
-path = 'testdir'
-suffix = 'c'
+
 
 def find_files(suffix, path):
     """
@@ -20,8 +18,11 @@ def find_files(suffix, path):
     Returns:
        a list of paths
     """
-    files = []
-    return _find_files(path, files, suffix)
+    if path is not None:
+        if os.path.isdir(path):
+            files = []
+            return _find_files(path, files, suffix)
+    return None
 
 
 def _find_files(path, files, ends_with):
@@ -38,10 +39,26 @@ def _find_files(path, files, ends_with):
                 _find_files(os.path.join(path, dir), files, ends_with)
             return files
 
+
 class Tests(unittest.TestCase):
-    def setUp():
-        pass
+    def setUp(self):
+        self.path = 'testdir'
+        self.listing = ['testdir/subdir1/a.c', 'testdir/subdir3/subsubdir1/b.c',
+                        'testdir/subdir5/a.c', 'testdir/t1.c']
+        self.suffix = 'c'
+        self.none = None
+        self.empty = 'testdir1'
+
+    def test_recursion(self):
+        self.assertEqual(
+            sorted(find_files(self.suffix, self.path)), sorted(self.listing))
+
+    def test_null(self):
+        self.assertEqual(find_files(self.suffix,  self.none), None)
+
+    def test_empty(self):
+        self.assertEqual(find_files(self.suffix, self.empty), None)
+
 
 if __name__ == "__main__":
-    suffix = 'c'
-    print(find_files(suffix, os.path.join(os.getcwd(), path)))
+    unittest.main()

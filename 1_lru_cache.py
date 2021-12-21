@@ -38,7 +38,7 @@ class LRU_Cache(object):
             else:
                 raise ValueError
         except ValueError:
-            print('Invalid input, expeected an integer!')
+            print('Invalid input, expected an integer!')
 
 
 class Tests(unittest.TestCase):
