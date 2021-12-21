@@ -23,15 +23,22 @@ class LRU_Cache(object):
         return item[0]
 
     def set(self, key, value):
-        # Set the value if the key is not present in the cache. If the cache is at capacity remove the oldest item.
-        if key not in self.cache and len(self.cache) == self.capacity:
-            i, v = self.lru.popitem(last=False)  # O(1)-Time
-            self.cache.pop(v)  # O(1)-Time
-        if key in self.cache:
-            del self.lru[self.cache[key][1]]  # O(1)-Time
-        self.counter += 1
-        self.cache[key] = (value, self.counter)  # O(1)-Time
-        self.lru[self.counter] = key  # O(1)-Time
+        try:
+            if value is not None:
+                value = int(value)
+                # Set the value if the key is not present in the cache. If the cache is at capacity remove the oldest item.
+                if key not in self.cache and len(self.cache) == self.capacity:
+                    i, v = self.lru.popitem(last=False)  # O(1)-Time
+                    self.cache.pop(v)  # O(1)-Time
+                if key in self.cache:
+                    del self.lru[self.cache[key][1]]  # O(1)-Time
+                self.counter += 1
+                self.cache[key] = (value, self.counter)  # O(1)-Time
+                self.lru[self.counter] = key  # O(1)-Time
+            else:
+                raise ValueError
+        except ValueError:
+            print('Invalid input, expeected an integer!')
 
 
 class Tests(unittest.TestCase):
@@ -49,6 +56,14 @@ class Tests(unittest.TestCase):
         self.cache.set(5, 5)
         self.cache.set(6, 6)
         self.assertEqual(self.cache.get(3), -1)
+
+    def test_null(self):
+        self.cache.set(None, None)
+        self.assertEqual(self.cache.get(None), -1)
+
+    def test_large(self):
+        self.cache.set(100000000000000, 100000000000000)
+        self.assertEqual(self.cache.get(100000000000000), 100000000000000)
 
 
 if __name__ == "__main__":

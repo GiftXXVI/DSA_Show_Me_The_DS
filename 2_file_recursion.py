@@ -1,3 +1,5 @@
+import unittest
+
 import os
 path = 'testdir'
 suffix = 'c'
@@ -35,6 +37,8 @@ def _find_files(path, files, ends_with):
             for dir in dirs:
                 _find_files(os.path.join(path, dir), files, ends_with)
             return files
+
+class Tests(unittest.TestCase):
 
 
 if __name__ == "__main__":
