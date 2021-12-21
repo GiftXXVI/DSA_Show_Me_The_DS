@@ -1,6 +1,7 @@
 import hashlib
 import random
 from datetime import datetime
+import unittest
 
 
 def calc_hash(self):
@@ -53,6 +54,13 @@ class Blockchain(object):
             print(node)
             node = node.next
 
+    def count(self):
+        node = self.head
+        count = 0
+        while node is not None:
+            count += 1
+        return count
+
 
 blockchain = Blockchain()
 sample = 'abcdefghijklmnopqrstuvwxyz'
@@ -66,3 +74,22 @@ for string in strings:
     blockchain.insert(string)
 
 blockchain.traverse()
+
+
+class Test(unittest.TestCase):
+    def setUp():
+        pass
+
+    def test_build():
+        pass
+
+    def test_empty():
+        pass
+
+    def test_null():
+        pass
+
+
+if __name__ == "__main__":
+    unittest.main()
+    pass
