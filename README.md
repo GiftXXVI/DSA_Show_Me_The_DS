@@ -45,7 +45,7 @@ All operations either access dictionary items using a key or increment an intege
 
 ## 2. File Recursion
 
-The implementation uses recursion to visit all nodes at all levels of the directory tree.
+The implementation uses recursion to visit all nodes at all levels of the directory tree. Recusrsion was selected because it is an intuitive algorithm for any scenario where a hierarchy of items with an unknown number of levels and uknown number of items per level has to be explored. 
 
 If 
 - n represents the current level(depth) of the directory tree and
@@ -59,7 +59,7 @@ then
 ![](https://latex.codecogs.com/svg.latex?x%20%3D%20%5Csum_%7Bn%3D1%7D%5E%7Bl%7D%28d_n%20%2B%20f_n%29)
 
 - represents the number of iterations taken to visit all files and directories at all levels and
-- $O(x)$ represents the complexity of the recursive algorithm that returns when it visits every leaf node on the directory tree.
+- $O(x)$ represents the complexity of the recursive algorithm that visits every leaf node on the directory tree.
 
 ## 3. Huffman Coding
 There are 2 algorithms, the first algorithm builds the Huffman tree and uses it to encode the message. The second algorithm uses the Huffman tree to decode the coded message back into its original form.
@@ -72,16 +72,16 @@ This loop is an O(n) operation because it cycles through all characters in the s
 
 The final section of the function consists of a zip function that takes the dictionary's keys list and its values list as inputs. Generating these 2 lists is an O(n) operation. The zip function depends on the size and number of list inputs, thus it is an O(n^2) operation. 
 
-In summary, this function has a complexity of O(n^2 + n). With n^2 coming from the zip operation and n coming from the loop. Since O(n^2) is the largest term (and grows at the highest rate with increasing input size) in the expression, the prepare_string() function is an O(n^2) operation.
+In summary, this function has a complexity of O(n^2 + n). With n^2 coming from the zip operation and n coming from the loop. Since O(n^2) is the largest term (and grows at the highest rate with increasing input size) in the expression, the prepare_string() function has a time complexity of O(n^2).
  
 #### Initialize Heap
-The next step is to create a heap. The heap is implemented as an array of size of the array returned by prepare_string() plus 2 additional indices.
+The next step is to create a heap. The heap is a great data structure for implementing a priority queue. The heap is implemented as an array of size of the array returned by prepare_string() plus 2 additional indices. (first index is skipped to enable smooth 1-based indexing, last index is skipped during initialization to prevent the extend method from extending the array when the last item is added)
 
-The process of initializing the Heap includes loop that get each element of the array returned from prepare_string() function (this is an O(n) operation). 
+The process of initializing the Heap includes a loop that gets each element of the array returned from prepare_string() function (this is an O(n) operation). 
 
 After retrieval, the element is immediately inserted into the first available index of the Heap(which is also the bottom level of the tree). This is an O(1) operation.
 
-The element is then moved to its proper position in the tree by the heapify function which compares its value with the value of its parent and swaps the 2 if the child has a lower value than the parent. The maximum number of comparisons possible is equal to the depth of the tree. Thus, this is an O(d) operation where d represents the depth of the leaf nodes of the Heap. 
+The element is then moved to its proper position in the tree by the heapify function which compares its value with the value of its parent and swaps the 2 if the child has a lower value than the parent. The maximum number of comparisons and swaps possible is equal to the depth of the tree. Thus, this is an O(d) operation where d represents the number of levels of the Heap tree. 
 
 Therefore, looping through the input list to add items to the heap is an O(n*d) operation for n items and d levels of the tree.
 
@@ -127,7 +127,7 @@ If it lands at a leaf node, it appends the character in the node and points back
 This function is O(n) where n is the length of the input binary string. (The operation of advancing the node pointer in the Huffman Tree is an O(1) operation, therefore it is ingored in the analysis.)
 
 ## 4. Active Directory
-Uses recursion to search for user inside a group and all its subgroups and recursively inside subgroups to the lowest level. 
+Uses recursion to search for user inside a group and all its subgroups and recursively inside subgroups to the lowest level. Just like the File Recursion problem before, the dynamic hieararchical nature of the group membership structure makes recursion an intuitive solution for this problem. 
 
 The recursive function accepts a search term and a group in which to search. It extracts the list of users and sorts them in ascending alphabetical order. The sort function has a complexity of O(n log n).
 
@@ -135,19 +135,32 @@ Next, it uses a binary search to try and find the search term in the sorted user
 
 The final part recursively calls each of the subgroups until the search term is found in one of the subgroups. This also happens recursively and the number of calls depends on the depth of the nesting.
 
+If the depth of nesting is represented by d, and the n represents the number of items in each group, then the time complexity of the search function is:
+
+O(d * nlogn * logn)
+
+or
+
+O(d*n(logn)^2)
+
 ## 5. Blockchain
 Creates a blockchain using a linked list.
-The linked list is implemented as a class called Blockchain. It contains properties such as head and tail which track the head and tail nodes (Blocks) of the Blockchain.
-The insert operation is an O(1) operation that sets the inserted node as head if the list is empty or sets the inserted node as tail if there are already items in the linked list.
+A linked list is an intuitive olution for a dynamic data structure where each node is supposed to point to the next node. 
 
-Traversing the list requires looping through all Blocks by starting at the head and following the next pointers until the last element is reached. The time taken varies depending on the number of elements in the list. Thus this is an O(n) operation.
+The linked list is implemented as a class called Blockchain. It contains properties such as head and tail which track the head and tail nodes (Blocks) of the Blockchain.
+
+The insert operation has a time complexity of O(1) and it sets the inserted node as head if the list is empty or sets the inserted node as tail if there are already items in the linked list.
+
+Traversing the list requires looping through all Blocks by starting at the head and following the next pointers until the last element is reached. The time taken varies depending on the number of elements in the list. Thus traversal of the BlockChain has a time complexity of O(n).
 
 ## 6. Union and Intersection
  
 ### Union 
-The union function uses a single loop, which runs for as many iterations as the number of elements of the linked list with the most elements. It checks if the value of the current element of the either linked list is in the union dictionary and adds it if it is not found. Then it returns the keys array created from the dictionary.
+The union function uses a single loop, which runs for as many iterations as the number of elements of the linked list with the most elements. 
 
-The loop is an O(n) process where n is the size of the larger linked list and the extraction of the list of keys from the dictionary is an O(n) process. This means the complexity of the function is O(n). 
+It checks if the value of the current element of the either linked list is in the union dictionary and adds it if it is not found. Then it returns the keys array created from the dictionary. A dictionary was selected as the main data structure because it allows lookups and updates in O(1) time complexity.
+
+The loop has a time complexity of O(n) where n is the size of the larger linked list.  The extraction of the list of keys from the dictionary has a time complexity of O(n). This means the complexity of the function is O(n). 
 
 ### Intersection
 The intersection function uses 3 dictionries and 2 loops. 

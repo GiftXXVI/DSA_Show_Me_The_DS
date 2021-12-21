@@ -23,7 +23,6 @@ def find_files(suffix, path):
 
 
 def _find_files(path, files, ends_with):
-    print(path)
     if os.path.isfile(path):
         if path[-1] == ends_with:
             files.append(path)
