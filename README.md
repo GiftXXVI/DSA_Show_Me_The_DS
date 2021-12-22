@@ -126,7 +126,7 @@ The rest of the function iterates through each bit of the binary string. If the 
 
 If it lands at a leaf node, it appends the character in the node and points back to the root to repeat the process and identify the next character.
 
-This function is O(n) where n is the length of the input binary string. (The operation of advancing the node pointer in the Huffman Tree is an O(1) operation, therefore it is ingored in the analysis.)
+The time complexity of this function is O(n) where n is the length of the input binary string. (The operation of advancing the node pointer in the Huffman Tree is an O(1) operation.)
 
 ## 4. Active Directory
 Uses recursion to search for user inside a group and all its subgroups and recursively inside subgroups to the lowest level. Just like the File Recursion problem before, the dynamic hieararchical nature of the group membership structure makes recursion an intuitive solution for this problem. 

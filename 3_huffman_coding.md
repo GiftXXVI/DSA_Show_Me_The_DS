@@ -13,6 +13,6 @@ The process of building a Huffman Tree from the input string and generating its 
 
 ## Decode function
 
-The decode function for this implementation of a Huffman Tree has been shown to have a complexity of O(d*n(logn)^2).
+The time complexity of this function is O(n) where n is the length of the input binary string. (The operation of advancing the node pointer in the Huffman Tree is an O(1) operation.)
 
 more details are in the README.md
