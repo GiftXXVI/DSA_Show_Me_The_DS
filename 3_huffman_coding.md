@@ -1,18 +1,21 @@
-
 # Huffman Coding
 
-Heap for Huffman Code: the heap made it easy to implement a priority queue data structure that popped out the item with the lowest frequency.
+## Key Decisions
 
-Linked List for Huffman Tree: Node class made it easy to encapsulate all of the required information such as the character, its frequency, the nodes bit (0 or 1) and its left and right children.
+This implementation uses the following key data structures:
 
-Encoding does one traversal to convert the code into a dictionary of codes instead of traversing the Huffman tree once for each character.
+1. Heap for Huffman Code: the heap made it easy to implement a priority queue data structure that popped out the item with the lowest frequency.
 
-## Encode function
+2. Linked List for Huffman Tree: Node class made it easy to encapsulate all of the required information such as the character, its frequency, the nodes bit (0 or 1) and its left and right children.
 
-The process of building a Huffman Tree from the input string and generating its binary code in this implementation has been shown to have 2 O(n) steps, 1 O(1) step and 1 O(n*d) step. Of these algebraic terms; n*d < n^2 and is the fastest growing term as input size increases. For a full binary tree, d can be n/2. Therefore, estimating n*d or n*n/2 to n^2, the function has a complexity of O(n^2).
+Another key decision was to do a single traversal to convert the Huffman code into a dictionary of codes during the encoding process instead of traversing the Huffman tree once for each character.
 
-## Decode function
+## Complexity
+
+### Encode function
+
+The process of building a Huffman Tree from the input string and generating its binary code in this implementation contains O(n), O(1) and O(n*d). Of these algebraic terms; n*d < n^2 and is the fastest growing term as input size increases. For a full binary tree, d can be n/2. Therefore, estimating n*d or n*n/2 to n^2, the function has a complexity of O(n^2).
+
+### Decode function
 
 The time complexity of this function is O(n) where n is the length of the input binary string. (The operation of advancing the node pointer in the Huffman Tree is an O(1) operation.)
-
-more details are in the README.md
