@@ -36,17 +36,18 @@ class Blockchain(object):
         self.tail = None
 
     def insert(self, data):
-        dt = datetime.now()
-        timestamp = datetime.timestamp(dt)
-        if self.head is None:
-            block = Block(timestamp=timestamp, data=data, previous_hash=0)
-            self.head = block
-            self.tail = self.head
-        else:
-            block = Block(timestamp=timestamp, data=data,
-                          previous_hash=self.tail.hash)
-            self.tail.next = block
-            self.tail = self.tail.next
+        if data is not None:
+            dt = datetime.now()
+            timestamp = datetime.timestamp(dt)
+            if self.head is None:
+                block = Block(timestamp=timestamp, data=data, previous_hash=0)
+                self.head = block
+                self.tail = self.head
+            else:
+                block = Block(timestamp=timestamp, data=data,
+                              previous_hash=self.tail.hash)
+                self.tail.next = block
+                self.tail = self.tail.next
 
     def traverse(self):
         node = self.head
@@ -59,35 +60,36 @@ class Blockchain(object):
         count = 0
         while node is not None:
             count += 1
+            node = node.next
         return count
 
 
-blockchain = Blockchain()
-sample = 'abcdefghijklmnopqrstuvwxyz'
-length = 20
-strings = [None for i in range(length)]
-
-for i in range(length):
-    strings[i] = ''.join(random.choice(sample) for i in range(length))
-
-for string in strings:
-    blockchain.insert(string)
-
-blockchain.traverse()
-
-
 class Test(unittest.TestCase):
-    def setUp():
-        pass
+    def setUp(self):
+        self.blockchain = Blockchain()
+        self.empty = Blockchain()
+        self.null = Blockchain()
+        sample = 'abcdefghijklmnopqrstuvwxyz'
+        self.length = 20
+        self.null_list = [None for i in range(self.length)]
+        self.strings = [None for i in range(self.length)]
+        for i in range(self.length):
+            self.strings[i] = ''.join(random.choice(sample)
+                                      for i in range(self.length))
+        for string in self.strings:
+            self.blockchain.insert(string)
 
-    def test_build():
-        pass
+    def test_build(self):
+        self.assertEqual(self.blockchain.count(), self.length)
 
-    def test_empty():
-        pass
+    def test_empty(self):
+        self.assertEqual(self.empty.count(), 0)
 
-    def test_null():
-        pass
+    def test_null(self):
+        for item in self.null_list:
+            self.null.insert(item)
+        self.null.traverse()
+        self.assertEqual(self.null.count(), 0)
 
 
 if __name__ == "__main__":
