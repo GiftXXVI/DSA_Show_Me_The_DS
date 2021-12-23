@@ -1,5 +1,6 @@
 import sys
 import unittest
+from collections import Counter
 
 
 class Node(object):
@@ -183,31 +184,32 @@ def traverse(node, binary_str):
 def huffman_encoding(data):
     if data is not None and len(data) > 3:
         prepared_data = list(prepare_string(data))
-        heap = MinHeap(len(prepared_data)+2)
-        for item in prepared_data:
-            heap.insert(Node(item[0], item[1]))
+        if len(prepared_data) > 1:
+            heap = MinHeap(len(prepared_data)+2)
+            for item in prepared_data:
+                heap.insert(Node(item[0], item[1]))
 
-        while(heap.find_min() and heap.get_size() > 2):
-            node1 = heap.extract_min()
-            node2 = heap.extract_min()
-            node1.set_bit(0)
-            node2.set_bit(1)
-            merge = Node(frequency=node1.frequency +
-                         node2.frequency, left=node1, right=node2)
-            heap.insert(merge)
+            while(heap.find_min() and heap.get_size() > 2):
+                node1 = heap.extract_min()
+                node2 = heap.extract_min()
+                node1.set_bit(0)
+                node2.set_bit(1)
+                merge = Node(frequency=node1.frequency +
+                             node2.frequency, left=node1, right=node2)
+                heap.insert(merge)
 
-        left = heap.extract_min()
-        right = heap.extract_min()
-        left.set_bit(0)
-        right.set_bit(1)
-        tree = HuffmanTree(Node(frequency=left.frequency +
-                                right.frequency, left=left, right=right))
-        encoded_data = ''
-        pre_order(tree)
-        for chr in data:
-            encoded_data += traversal[chr]
-        encoded_data
-        return encoded_data, tree
+            left = heap.extract_min()
+            right = heap.extract_min()
+            left.set_bit(0)
+            right.set_bit(1)
+            tree = HuffmanTree(Node(frequency=left.frequency +
+                                    right.frequency, left=left, right=right))
+            encoded_data = ''
+            pre_order(tree)
+            for chr in data:
+                encoded_data += traversal[chr]
+            encoded_data
+            return encoded_data, tree
     return None, None
 
 
@@ -246,6 +248,7 @@ class Tests(unittest.TestCase):
         self.sentence = "The bird is the word"
         self.none = None
         self.empty = ""
+        self.repeated = "AAAAAABB"
 
     def test_encode_decode(self):
         encoded_data, tree = huffman_encoding(self.sentence)
@@ -263,6 +266,16 @@ class Tests(unittest.TestCase):
         decoded_data = huffman_decoding(encoded_data, tree)
         self.assertEqual(encoded_data, None)
         self.assertEqual(decoded_data, None)
+
+    def test_repeat(self):
+        encoded_data, tree = huffman_encoding(self.repeated)
+        decoded_data = huffman_decoding(encoded_data, tree)
+        count = Counter(self.repeated)
+        if len(count) > 1:
+            self.assertEqual(decoded_data, self.repeated)
+        else:
+            self.assertEqual(encoded_data, None)
+            self.assertEqual(decoded_data, None)
 
 
 if __name__ == "__main__":

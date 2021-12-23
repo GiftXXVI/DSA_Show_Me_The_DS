@@ -6,6 +6,8 @@ class LRU_Cache(object):
 
     def __init__(self, capacity):
         # Initialize class variables
+        if capacity is None or capacity < 1:
+            capacity = 1
         self.capacity = capacity
         self.counter = 0
         self.lru = OrderedDict()
@@ -44,6 +46,9 @@ class LRU_Cache(object):
 class Tests(unittest.TestCase):
     def setUp(self):
         self.cache = LRU_Cache(5)
+        self.cache_bad_cap = LRU_Cache(0)
+        self.cache_bad_cap2 = LRU_Cache(-1)
+        self.cache_bad_cap3 = LRU_Cache(None)
 
     def test_lru(self):
         self.cache.set(1, 1)
@@ -64,6 +69,20 @@ class Tests(unittest.TestCase):
     def test_large(self):
         self.cache.set(100000000000000, 100000000000000)
         self.assertEqual(self.cache.get(100000000000000), 100000000000000)
+
+    def test_bad_capacity(self):
+        self.cache_bad_cap.set(1, 1)
+        self.cache_bad_cap.set(2, 2)
+        print(self.cache_bad_cap.cache)
+        self.assertEqual(self.cache_bad_cap.get(1), -1)
+        self.assertEqual(self.cache_bad_cap.get(2), 2)
+
+    def test_null_capacity(self):
+        self.cache_bad_cap3.set(1, 1)
+        self.cache_bad_cap3.set(2, 2)
+        print(self.cache_bad_cap3.cache)
+        self.assertEqual(self.cache_bad_cap3.get(1), -1)
+        self.assertEqual(self.cache_bad_cap3.get(2), 2)
 
 
 if __name__ == "__main__":

@@ -74,8 +74,8 @@ class Test(unittest.TestCase):
     def test_find(self):
         sub_child_user = "sub_child_user"
         self.sub_child.add_user(sub_child_user)
-        self.child.add_group(sub_child)
-        self.parent.add_group(child)
+        self.child.add_group(self.sub_child)
+        self.parent.add_group(self.child)
 
         sample = 'abcdefghijklmnopqrstuvwxyz'
         length = 20
@@ -87,19 +87,53 @@ class Test(unittest.TestCase):
         for i in range(len(strings)):
             flag = random.randint(1, 3)
             if flag == 1:
-                parent.add_user(strings.pop())
+                self.parent.add_user(strings.pop())
             elif flag == 2:
-                child.add_user(strings.pop())
+                self.child.add_user(strings.pop())
             else:
-                sub_child.add_user(strings.pop())
-        self.assertTrue(is_user_in_group(sub_child_user, parent))
-        self.assertFalse(is_user_in_group('nothing', parent))
+                self.sub_child.add_user(strings.pop())
+        self.assertTrue(is_user_in_group(sub_child_user, self.parent))
+        self.assertFalse(is_user_in_group('nothing', self.parent))
 
     def test_null(self):
         self.assertEqual(is_user_in_group('user', self.none), False)
 
     def test_empty(self):
         self.assertEqual(is_user_in_group('user', self.empty), False)
+
+    def test_not_found(self):
+        sample = 'abcdefghijklmnopqrstuvwxyz'
+        length = 20
+        strings = [None for i in range(length)]
+        for i in range(length):
+            strings[i] = ''.join(random.choice(sample) for i in range(length))
+
+        for i in range(len(strings)):
+            flag = random.randint(1, 3)
+            if flag == 1:
+                self.parent.add_user(strings.pop())
+            elif flag == 2:
+                self.child.add_user(strings.pop())
+            else:
+                self.sub_child.add_user(strings.pop())
+        self.assertEqual(is_user_in_group("", self.parent),False)
+
+    def test_none(self):
+        sample = 'abcdefghijklmnopqrstuvwxyz'
+        length = 20
+        strings = [None for i in range(length)]
+        for i in range(length):
+            strings[i] = ''.join(random.choice(sample) for i in range(length))
+
+        for i in range(len(strings)):
+            flag = random.randint(1, 3)
+            if flag == 1:
+                self.parent.add_user(strings.pop())
+            elif flag == 2:
+                self.child.add_user(strings.pop())
+            else:
+                self.sub_child.add_user(strings.pop())
+        self.assertEqual(is_user_in_group(None, self.parent),False)
 
 
 if __name__ == "__main__":

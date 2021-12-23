@@ -6,7 +6,10 @@ This implementation uses a dictionary (dict) as the cache and and ordered dictio
 
 Dictionaries were chosen for this implementation because they are able to insert, retireve and delete items in O(1) time complexity.
 
+
 ## Complexity
+
+This implementation requires 2 dictionaries of size n, where n is the size of the cache. if the cache is full(with n inputs), then the space complexity is O(n).
 
 ### get
 
