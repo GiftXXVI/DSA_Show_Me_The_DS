@@ -6,6 +6,11 @@ This implementation uses recursion to visit all nodes at all levels of the direc
 
 ## Complexity
 
+## Space Complexity
+
+Located files are stored in a list whose maximum possible size matches the size of the input. Therefore the space complexity is O(n)
+
+### Time Complexity
 If
 
 - n represents the current level(depth) of the directory tree and

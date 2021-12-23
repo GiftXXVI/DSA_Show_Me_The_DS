@@ -73,14 +73,12 @@ class Tests(unittest.TestCase):
     def test_bad_capacity(self):
         self.cache_bad_cap.set(1, 1)
         self.cache_bad_cap.set(2, 2)
-        print(self.cache_bad_cap.cache)
         self.assertEqual(self.cache_bad_cap.get(1), -1)
         self.assertEqual(self.cache_bad_cap.get(2), 2)
 
     def test_null_capacity(self):
         self.cache_bad_cap3.set(1, 1)
         self.cache_bad_cap3.set(2, 2)
-        print(self.cache_bad_cap3.cache)
         self.assertEqual(self.cache_bad_cap3.get(1), -1)
         self.assertEqual(self.cache_bad_cap3.get(2), 2)
 
