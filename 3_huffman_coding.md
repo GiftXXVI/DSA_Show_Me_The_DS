@@ -12,7 +12,7 @@ Another key decision was to do a single traversal to convert the Huffman code in
 
 ## Complexity
 
-### Sapce Complexity
+### Space Complexity
 
 This implementation create a list of frequencies (of size n, where n is the input string size), a Heap (of size n+2, where n is input string size), a Huffman Tree (of size 2n+1, wih n input nodes and n+1 intermediate nodes) and a list of size 2n+1 (made up of elements of the Huffman Tree) for decoding. In conclusion, the space complexity of the algorithm is O(n) because the space used is a multiple of the input size.
 
