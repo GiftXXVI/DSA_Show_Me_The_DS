@@ -21,4 +21,4 @@ All operations (inserts, lookups and deletes) have a time complexity of O(1). Th
 
 #### set
 
-All operations (inserts, lookups and deletes) have a time complexity of O(1). Consequently, the function as a whole has a time comlpexity of O(1).
+All operations (inserts, lookups and deletes) have a time complexity of O(1). Consequently, the function as a whole has a time complexity of O(1).
